@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using middleware;
 
 namespace webapitest
 {
@@ -41,7 +42,11 @@ namespace webapitest
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ContrastMiddleware>();
+
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
