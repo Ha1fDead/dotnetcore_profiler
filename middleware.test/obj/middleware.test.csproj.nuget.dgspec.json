@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/lafferty/Development/contrastsecurity/middleware.test/middleware.test.csproj": {}
+  },
+  "projects": {
+    "/home/lafferty/Development/contrastsecurity/middleware.test/middleware.test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/lafferty/Development/contrastsecurity/middleware.test/middleware.test.csproj",
+        "projectName": "middleware.test",
+        "projectPath": "/home/lafferty/Development/contrastsecurity/middleware.test/middleware.test.csproj",
+        "packagesPath": "/home/lafferty/.nuget/packages/",
+        "outputPath": "/home/lafferty/Development/contrastsecurity/middleware.test/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/lafferty/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.0.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
