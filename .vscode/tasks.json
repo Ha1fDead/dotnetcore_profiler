@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/middleware.test/middleware.test.csproj"
+                "${workspaceFolder}/webapitest/webapitest.csproj"
             ],
             "problemMatcher": "$tsc"
         },
