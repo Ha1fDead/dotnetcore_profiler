@@ -15,7 +15,7 @@ namespace middleware
         // Global State in libraries is hard -- not sure what the best practices are
         // This will reset on app restart or app refresh
         // I think I'd want a permanent storage for this so data wouldn't be lost
-        public static ConcurrentBag<TimeSpan> RequestTimes = new ConcurrentBag<TimeSpan>();
+        public static ConcurrentBag<RequestData> RequestTimes = new ConcurrentBag<RequestData>();
         private readonly RequestDelegate _requestDelegate;
         public RequestDataCollectorMiddleware(RequestDelegate requestDelegate)
         {
@@ -29,7 +29,8 @@ namespace middleware
             await _requestDelegate.Invoke(context);
             sw.Stop();
 
-            RequestDataCollectorMiddleware.RequestTimes.Add(sw.Elapsed);
+            var model = new RequestData(sw.Elapsed, context.Response.Body.Length);
+            RequestDataCollectorMiddleware.RequestTimes.Add(model);
         }
     }
 }

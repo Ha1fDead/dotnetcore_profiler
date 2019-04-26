@@ -17,9 +17,12 @@ namespace middleware
             _requestDelegate = requestDelegate;
         }
 
+        // What about transfer encoding?
         public async Task InvokeAsync(HttpContext context)
         {
             var capturedBody = context.Response.Body;
+            capturedBody.Dispose();
+            
             using (var updatedBody = new MemoryStream())
             {
                 context.Response.Body = updatedBody;
@@ -28,17 +31,20 @@ namespace middleware
 
                 if (RequestDataCollectorMiddleware.RequestTimes.Any())
                 {
-                    var shortest = RequestDataCollectorMiddleware.RequestTimes.Min();
-                    var longest = RequestDataCollectorMiddleware.RequestTimes.Max();
-                    var avgTicks = RequestDataCollectorMiddleware.RequestTimes.Average((data) => {
-                        return data.Ticks;
+                    var shortest = RequestDataCollectorMiddleware.RequestTimes.Min((data) => {
+                        return data.RequestBodyLengthBytes;
                     });
-                    var average = TimeSpan.FromTicks(Convert.ToInt64(avgTicks));
+                    var longest = RequestDataCollectorMiddleware.RequestTimes.Max((data) => {
+                        return data.RequestBodyLengthBytes;
+                    });
+                    var avgSize = RequestDataCollectorMiddleware.RequestTimes.Average((data) => {
+                        return data.RequestBodyLengthBytes;
+                    });
 
                     // This could be improved by intelligently detecting a "Drop Point" in the target HTML
-                    var length = Encoding.ASCII.GetBytes($"Min: {shortest}, Average: {average}, Max: {longest}");
+                    var length = Encoding.ASCII.GetBytes($"Min size: {shortest}, Average size: {avgSize}, Max size: {longest}.");
                     await updatedBody.WriteAsync(length, 0, length.Length);
-                    context.Response.ContentLength = context.Response.ContentLength + length.Length;
+                    context.Response.ContentLength = updatedBody.Length + length.Length;
                 }
 
                 updatedBody.Seek(0, SeekOrigin.Begin);
