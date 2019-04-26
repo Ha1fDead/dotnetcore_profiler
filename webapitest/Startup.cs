@@ -49,7 +49,8 @@ namespace webapitest
                 app.UseHsts();
             }
 
-            app.UseMiddleware<ContrastMiddleware>();
+            app.UseHtmlInsertMiddleware();
+            app.UseRequestDataCollectorMiddleware();
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
