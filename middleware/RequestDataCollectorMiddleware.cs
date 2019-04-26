@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,7 +11,8 @@ namespace middleware
 {
     public class RequestDataCollectorMiddleware
     {
-        public static List<TimeSpan> RequestTimes = new List<TimeSpan>();
+        // What happens if the server uptime is measured in decades, with millions of requests per second?
+        public static ConcurrentBag<TimeSpan> RequestTimes = new ConcurrentBag<TimeSpan>();
         private readonly RequestDelegate _requestDelegate;
         public RequestDataCollectorMiddleware(RequestDelegate requestDelegate)
         {
