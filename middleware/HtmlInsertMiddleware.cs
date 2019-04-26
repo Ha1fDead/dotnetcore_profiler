@@ -33,20 +33,9 @@ namespace middleware
 
                     if (RequestDataCollectorMiddleware.RequestTimes.Any())
                     {
-                        var shortest = RequestDataCollectorMiddleware.RequestTimes.Min((data) => {
-                            return data.RequestBodyLengthBytes;
-                        });
-                        var longest = RequestDataCollectorMiddleware.RequestTimes.Max((data) => {
-                            return data.RequestBodyLengthBytes;
-                        });
-                        var avgSize = RequestDataCollectorMiddleware.RequestTimes.Average((data) => {
-                            return data.RequestBodyLengthBytes;
-                        });
-
-                        // This could be improved by intelligently detecting a "Drop Point" in the target HTML
-                        var length = Encoding.ASCII.GetBytes($"Min size: {shortest}, Average size: {avgSize}, Max size: {longest}.");
-                        await swapBody.WriteAsync(length, 0, length.Length);
-                        context.Response.ContentLength = swapBody.Length + length.Length;
+                        var injected = this.GetInjected();
+                        await swapBody.WriteAsync(injected, 0, injected.Length);
+                        context.Response.ContentLength = swapBody.Length + injected.Length;
                     }
 
                     swapBody.Seek(0, SeekOrigin.Begin);
@@ -57,7 +46,23 @@ namespace middleware
             {
                 context.Response.Body = capturedBody;
             }
+        }
 
+        private Byte[] GetInjected() {
+            var shortest = RequestDataCollectorMiddleware.RequestTimes.Min((data) => {
+                return data.RequestBodyLengthBytes;
+            });
+            var longest = RequestDataCollectorMiddleware.RequestTimes.Max((data) => {
+                return data.RequestBodyLengthBytes;
+            });
+            var avgSize = RequestDataCollectorMiddleware.RequestTimes.Average((data) => {
+                return data.RequestBodyLengthBytes;
+            });
+
+            // This could be improved by intelligently detecting a "Drop Point" in the target HTML
+            var toInject = Encoding.ASCII.GetBytes($"Min size: {shortest}, Average size: {avgSize}, Max size: {longest}.");
+
+            return toInject;
         }
     }
 }
