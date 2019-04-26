@@ -12,6 +12,9 @@ namespace middleware
     public class RequestDataCollectorMiddleware
     {
         // What happens if the server uptime is measured in decades, with millions of requests per second?
+        // Global State in libraries is hard -- not sure what the best practices are
+        // This will reset on app restart or app refresh
+        // I think I'd want a permanent storage for this so data wouldn't be lost
         public static ConcurrentBag<TimeSpan> RequestTimes = new ConcurrentBag<TimeSpan>();
         private readonly RequestDelegate _requestDelegate;
         public RequestDataCollectorMiddleware(RequestDelegate requestDelegate)
@@ -26,7 +29,6 @@ namespace middleware
             await _requestDelegate.Invoke(context);
             sw.Stop();
 
-            // definitely not thread safe
             RequestDataCollectorMiddleware.RequestTimes.Add(sw.Elapsed);
         }
     }
