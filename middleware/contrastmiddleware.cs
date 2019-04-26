@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -13,7 +16,7 @@ namespace middleware
         }
 
         /**
-        
+        https://devblogs.microsoft.com/dotnet/custom-asp-net-core-middleware-example/
         Goals:
 
         Measure the total time spent processing the request.
@@ -25,15 +28,29 @@ namespace middleware
         Include a small web application that demonstrates the behavior of your IHttpModule (or Middleware.) This web application is not the focus of the project and you should feel free to use the web application template projects provided by Visual Studio.
 
          */
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             // Request Delegates run in the order they are registered
             // So we need to ensure ours runs first
-            DateTime start = DateTime.UtcNow;
-            await _requestDelegate.Invoke(context);
-            DateTime end = DateTime.UtcNow;
+            var capturedBody = context.Response.Body;
+            var sw = new Stopwatch();
+            sw.Start();
 
-            Console.WriteLine((end - start).ToString());
+            using (var updatedBody = new MemoryStream())
+            {
+                context.Response.Body = updatedBody;
+                await _requestDelegate.Invoke(context);
+                sw.Stop();
+
+                context.Response.Body = capturedBody;
+
+                var length = Encoding.ASCII.GetBytes($"Run Duration: {sw.ElapsedMilliseconds}");
+                await updatedBody.WriteAsync(length, 0, length.Length);
+                updatedBody.Seek(0, SeekOrigin.Begin);
+                var newContent = new StreamReader(updatedBody).ReadToEnd();
+                context.Response.ContentLength = context.Response.ContentLength + length.Length;
+                await context.Response.WriteAsync(newContent);
+            }
 
         }
     }
