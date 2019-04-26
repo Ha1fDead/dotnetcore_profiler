@@ -8,7 +8,11 @@ namespace middleware.test
         [Fact(Skip = "Scaffold")]
         public void Invoke_RecordsRuntime()
         {
+            // Arrange
 
+            // Act
+
+            // Assert
         }
 
         [Fact(Skip = "Scaffold")]

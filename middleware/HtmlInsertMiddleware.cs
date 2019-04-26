@@ -31,12 +31,9 @@ namespace middleware
                     context.Response.Body = swapBody;
                     await _requestDelegate.Invoke(context);
 
-                    if (RequestProfilerMiddleware.ProfiledRequests.Any())
-                    {
-                        var injected = this.GetInjected();
-                        await swapBody.WriteAsync(injected, 0, injected.Length);
-                        context.Response.ContentLength = swapBody.Length + injected.Length;
-                    }
+                    var injected = ProfilerLogic.GetInjected();
+                    await swapBody.WriteAsync(injected, 0, injected.Length);
+                    context.Response.ContentLength = swapBody.Length + injected.Length;
 
                     swapBody.Seek(0, SeekOrigin.Begin);
                     await swapBody.CopyToAsync(capturedBody);
@@ -46,23 +43,6 @@ namespace middleware
             {
                 context.Response.Body = capturedBody;
             }
-        }
-
-        private Byte[] GetInjected() {
-            var shortest = RequestProfilerMiddleware.ProfiledRequests.Min((data) => {
-                return data.RequestBodyLengthBytes;
-            });
-            var longest = RequestProfilerMiddleware.ProfiledRequests.Max((data) => {
-                return data.RequestBodyLengthBytes;
-            });
-            var avgSize = RequestProfilerMiddleware.ProfiledRequests.Average((data) => {
-                return data.RequestBodyLengthBytes;
-            });
-
-            // This could be improved by intelligently detecting a "Drop Point" in the target HTML
-            var toInject = Encoding.ASCII.GetBytes($"Min size: {shortest}, Average size: {avgSize}, Max size: {longest}.");
-
-            return toInject;
         }
     }
 }

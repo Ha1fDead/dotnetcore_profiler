@@ -24,6 +24,7 @@ namespace webapitest.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            
         }
     }
 }
