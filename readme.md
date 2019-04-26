@@ -1,6 +1,6 @@
 # .NET Instrumentation Engineer Projec
 
-Init
+https://ci.appveyor.com/api/projects/status/pcgoxda2pmfwqc3j/branch/master?svg=true
 
 Helpful:
 
