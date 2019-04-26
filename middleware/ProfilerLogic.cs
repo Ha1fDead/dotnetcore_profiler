@@ -11,7 +11,7 @@ namespace middleware
         // Global State in libraries is hard -- not sure what the best practices are
         // This will reset on app restart or app refresh
         // I think I'd want a permanent storage for this so data wouldn't be lost
-        public static ConcurrentBag<RequestData> ProfiledRequests = new ConcurrentBag<RequestData>();
+        public static ConcurrentBag<RequestProfiledModel> ProfiledRequests = new ConcurrentBag<RequestProfiledModel>();
 
         public static Byte[] GetInjected() {
             if (!ProfilerLogic.ProfiledRequests.Any())

@@ -6,9 +6,9 @@ using System.Text;
 namespace middleware
 {
     /// Metadata about a request
-    public class RequestData
+    public class RequestProfiledModel
     {
-        public RequestData(TimeSpan duration, long length)
+        public RequestProfiledModel(TimeSpan duration, long length)
         {
             this.RequestDuration = duration;
             this.RequestBodyLengthBytes = length;

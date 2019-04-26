@@ -24,7 +24,7 @@ namespace middleware
             await _requestDelegate.Invoke(context);
             sw.Stop();
 
-            var model = new RequestData(sw.Elapsed, context.Response.Body.Length);
+            var model = new RequestProfiledModel(sw.Elapsed, context.Response.Body.Length);
             ProfilerLogic.ProfiledRequests.Add(model);
         }
     }
