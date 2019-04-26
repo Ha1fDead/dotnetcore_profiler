@@ -1,6 +1,6 @@
-# .NET Instrumentation Engineer Projec
+# .NET Instrumentation Engineer Project
 
-![Build](https://ci.appveyor.com/api/projects/status/pcgoxda2pmfwqc3j/branch/master?svg=true "Build")
+[![Build status](https://ci.appveyor.com/api/projects/status/pcgoxda2pmfwqc3j/branch/master?svg=true)](https://ci.appveyor.com/project/NathanLafferty/dotnetcore-profiler/branch/master)
 
 Helpful:
 
