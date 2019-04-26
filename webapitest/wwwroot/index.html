@@ -7,10 +7,14 @@
     <body>
         <script type="application/javascript">
             console.log("I am loaded in the browser");
-            fetch("api/values", {
-                method: "get"
-            });
 
+            for (let x = 0; x < 50; x++) {
+                setTimeout(() => {
+                    fetch("api/values", {
+                        method: "get"
+                    });
+                }, Math.random() * 100); // make 500 requests between 0 and 100 ms apart
+            }
         </script>
         <main>
             <p>Hello World</p>

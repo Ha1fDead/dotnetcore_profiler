@@ -15,7 +15,8 @@ namespace webapitest.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            Thread.Sleep(4000);
+            var random = new Random();
+            Thread.Sleep(random.Next(0, 100)); // sleep between 0 and 100 ms to simulate load
             return new string[] { "value1", "value2" };
         }
 
