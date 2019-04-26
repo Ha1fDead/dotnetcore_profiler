@@ -20,10 +20,10 @@ namespace middleware
         // What about transfer encoding?
         public async Task InvokeAsync(HttpContext context)
         {
+            // Due to middleware architecture, we don't have to worry about this stream having anything in it yet
+            // This assumption won't be true after calling the request delegate
             var capturedBody = context.Response.Body;
             
-            // What happens if someone has some content already written to the response?
-            // Pretty sure this shouldn't be possible given middleware architecture -- not supposed to do anything with the request until the way back out of the middleware
             try
             {
                 using (var swapBody = new MemoryStream())
