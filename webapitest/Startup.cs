@@ -50,7 +50,7 @@ namespace webapitest
             }
 
             app.UseHtmlInsertMiddleware();
-            app.UseRequestDataCollectorMiddleware();
+            app.UseRequestProfilerMiddleware();
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();

@@ -16,10 +16,10 @@ namespace middleware
             return builder.UseMiddleware<HtmlInsertMiddleware>();
         }
 
-        public static IApplicationBuilder UseRequestDataCollectorMiddleware(
+        public static IApplicationBuilder UseRequestProfilerMiddleware(
             this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<RequestDataCollectorMiddleware>();
+            return builder.UseMiddleware<RequestProfilerMiddleware>();
         }
     }
 }

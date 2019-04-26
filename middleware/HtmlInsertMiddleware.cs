@@ -31,7 +31,7 @@ namespace middleware
                     context.Response.Body = swapBody;
                     await _requestDelegate.Invoke(context);
 
-                    if (RequestDataCollectorMiddleware.RequestTimes.Any())
+                    if (RequestProfilerMiddleware.ProfiledRequests.Any())
                     {
                         var injected = this.GetInjected();
                         await swapBody.WriteAsync(injected, 0, injected.Length);
@@ -49,13 +49,13 @@ namespace middleware
         }
 
         private Byte[] GetInjected() {
-            var shortest = RequestDataCollectorMiddleware.RequestTimes.Min((data) => {
+            var shortest = RequestProfilerMiddleware.ProfiledRequests.Min((data) => {
                 return data.RequestBodyLengthBytes;
             });
-            var longest = RequestDataCollectorMiddleware.RequestTimes.Max((data) => {
+            var longest = RequestProfilerMiddleware.ProfiledRequests.Max((data) => {
                 return data.RequestBodyLengthBytes;
             });
-            var avgSize = RequestDataCollectorMiddleware.RequestTimes.Average((data) => {
+            var avgSize = RequestProfilerMiddleware.ProfiledRequests.Average((data) => {
                 return data.RequestBodyLengthBytes;
             });
 

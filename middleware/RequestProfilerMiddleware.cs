@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Http;
 
 namespace middleware
 {
-    public class RequestDataCollectorMiddleware
+    public class RequestProfilerMiddleware
     {
         // What happens if the server uptime is measured in decades, with millions of requests per second?
         // Global State in libraries is hard -- not sure what the best practices are
         // This will reset on app restart or app refresh
         // I think I'd want a permanent storage for this so data wouldn't be lost
-        public static ConcurrentBag<RequestData> RequestTimes = new ConcurrentBag<RequestData>();
+        public static ConcurrentBag<RequestData> ProfiledRequests = new ConcurrentBag<RequestData>();
         private readonly RequestDelegate _requestDelegate;
-        public RequestDataCollectorMiddleware(RequestDelegate requestDelegate)
+        public RequestProfilerMiddleware(RequestDelegate requestDelegate)
         {
             _requestDelegate = requestDelegate;
         }
@@ -30,7 +30,7 @@ namespace middleware
             sw.Stop();
 
             var model = new RequestData(sw.Elapsed, context.Response.Body.Length);
-            RequestDataCollectorMiddleware.RequestTimes.Add(model);
+            RequestProfilerMiddleware.ProfiledRequests.Add(model);
         }
     }
 }
