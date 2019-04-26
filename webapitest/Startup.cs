@@ -27,6 +27,13 @@ namespace webapitest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddLogging(
+            builder =>
+            {
+                builder.AddFilter("Microsoft", LogLevel.None)
+                    .AddFilter("System", LogLevel.None)
+                    .AddConsole();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
