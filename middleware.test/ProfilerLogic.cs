@@ -39,6 +39,7 @@ namespace middleware.test
             Assert.NotEmpty(res);
             var message = Encoding.ASCII.GetString(res);
             Assert.NotEmpty(message);
+            Assert.Equal("Min size: 10, Average size: 370, Max size: 1000.", message);
         }
     }
 }
