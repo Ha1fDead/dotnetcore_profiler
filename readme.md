@@ -2,6 +2,10 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pcgoxda2pmfwqc3j/branch/master?svg=true)](https://ci.appveyor.com/project/NathanLafferty/dotnetcore-profiler/branch/master)
 
+This is a coding exercise ran by [Contrast-Security](https://contrast-security-oss.github.io/join-the-team/challenges.html)
+
+The goal of the project was to build a very simple ASP.NET Core profiler using middleware that could determine body lengths and manipulate generated html.
+
 ## Building
 
 Requirements:
@@ -93,29 +97,10 @@ For both, I felt it was the responsibility of the underlying framework to handle
 
 ## Unknowns
 
-1. How does HTTP2 affect the system?
-2. How do file transfers affect the system?
+1. How does HTTP2 affect the system? (I don't think it will)
+2. How do file transfers affect the system? (particularly large streamed files)
 3. How does streaming content affect the system?
     - Large-data transfers
     - Websockets
 4. Are there any security considerations with profiling response sizes with encryption keys?
-
-## Helpful Resources
-
-
-https://github.com/aspnet/AspNetCore/issues/664
-https://stackoverflow.com/questions/30652138/how-to-retrieve-the-current-response-body-length
-https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-3.0 
-    (very very basic high level overview)
-https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/request-response?view=aspnetcore-3.0 
-    (how to manipulate request/response in middleware)
-https://devblogs.microsoft.com/dotnet/system-io-pipelines-high-performance-io-in-net/ 
-    (super in-depth on pipeline IO and relevant for performance)
-http://anthonygiretti.com/2018/09/04/asp-net-core-2-1-middlewares-part1-building-a-custom-middleware/
-    (mildly beginner-friendly guide)
-
-https://github.com/aspnet/BrowserLink/blob/master/src/Microsoft.VisualStudio.Web.BrowserLink/BrowserLinkMiddleWare.cs
-    Fantastic actual source code for doing something very similar (writing to arbitrary response bodies)
-
-https://jeremylindsayni.wordpress.com/2019/02/18/adding-middleware-to-your-net-core-mvc-pipeline-that-formats-and-indents-html-output/
-    Helpful article that taught me how to intercept the response stream
+5. How does this app function if ran in ASP.NET 4.7.2 or older versions?
