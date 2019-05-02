@@ -2,6 +2,47 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pcgoxda2pmfwqc3j/branch/master?svg=true)](https://ci.appveyor.com/project/NathanLafferty/dotnetcore-profiler/branch/master)
 
+## Building
+
+Requirements:
+
+1. `dotnetcore` SDK installed ([download](https://dotnet.microsoft.com/download))
+2. clone the project (`git clone https://github.com/Ha1fDead/dotnetcore_profiler.git`)
+3. run `dotnet run` from the `rest_file_api` directory (NOT the root solution)
+
+(Note: Your browser will not automatically load from this setup)
+
+(You can run `dotnet --info` to verify dotnet core is installed correctly)
+
+For Visual Studio Code:
+
+1. `dotnetcore` SDK installed ([download](https://dotnet.microsoft.com/download))
+2. Install the [C# Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
+3. clone the project (`git clone https://github.com/Ha1fDead/dotnetcore_profiler.git`)
+4. Open the solution in VSCode
+5. Hit F5, your default browser should open
+
+The example profiled app should be running on `http://localhost:5000` and `https://localhost:5001`.
+
+## Testing
+
+Run `dotnet test` from the solution directory or the tests project.
+
+Or install [NET Core Test Explorer](https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer)
+
+NOTE: Currently one of the tests fails unless ran in isolation. This is due to a choice in state pattern, and is discussed in `problems` section.
+
+## Using
+
+Install project and build (see previous step).
+
+Copy and reference the `middleware.dll` file into your project.
+
+Add desired middleware:
+
+`app.UseHtmlInsertMiddleware();` will inject profiled data into all of your `text/html` pages
+`app.UseRequestProfilerMiddleware();` will actually profile your requests for how long they take and their response body sizes. Does *not* alter your html pages.
+
 ## Future Improvements
 
 1. Allow whitelist of developer-configurable content-type inserts
@@ -14,6 +55,8 @@
     - URL or session specific
     - Could add another form of developer-configurable middleware to provide further granular access based on session / authorization
 6. Provide a mechanism to export application state to a file or database
+7. Autolink appveyer build to release `.dll` file generation
+8. Provide very simple way to install package (nuget, etc.)
 
 ## Problems
 
