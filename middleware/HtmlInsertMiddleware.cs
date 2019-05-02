@@ -31,9 +31,12 @@ namespace middleware
                     context.Response.Body = swapBody;
                     await _requestDelegate.Invoke(context);
 
-                    var injected = ProfilerLogic.GetInjected();
-                    await swapBody.WriteAsync(injected, 0, injected.Length);
-                    context.Response.ContentLength = swapBody.Length + injected.Length;
+                    if (context.Response.ContentType == "text/html")
+                    {
+                        var injected = ProfilerLogic.GetInjected();
+                        await swapBody.WriteAsync(injected, 0, injected.Length);
+                        context.Response.ContentLength = swapBody.Length + injected.Length;
+                    }
 
                     swapBody.Seek(0, SeekOrigin.Begin);
                     await swapBody.CopyToAsync(capturedBody);
