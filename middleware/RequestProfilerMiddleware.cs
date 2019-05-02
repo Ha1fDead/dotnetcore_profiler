@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace middleware
 {
+    /// Profiles the request for how long it took and the generated response length
     public class RequestProfilerMiddleware
     {
         private readonly RequestDelegate _requestDelegate;

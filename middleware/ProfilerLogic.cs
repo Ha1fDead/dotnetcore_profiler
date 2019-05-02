@@ -13,6 +13,7 @@ namespace middleware
         // I think I'd want a permanent storage for this so data wouldn't be lost
         public static ConcurrentBag<RequestProfiledModel> ProfiledRequests = new ConcurrentBag<RequestProfiledModel>();
 
+        /// Get binary ASCII-encoded string for profiled data
         public static Byte[] GetInjected() {
             if (!ProfilerLogic.ProfiledRequests.Any())
             {
