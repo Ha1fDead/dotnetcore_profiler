@@ -15,10 +15,12 @@ namespace middleware.test
         {
             // Arrange
             const string mockResponse = "This is a test";
-            ProfilerLogic.ProfiledRequests = new System.Collections.Concurrent.ConcurrentBag<RequestProfiledModel>();
             var requestProfilerMiddleware = new RequestProfilerMiddleware(async (innerHttpContext) => {
                 await innerHttpContext.Response.WriteAsync(mockResponse);
                 innerHttpContext.Request.ContentLength = Encoding.ASCII.GetByteCount(mockResponse);
+
+                // reset the static global so test runs correctly
+                ProfilerLogic.ProfiledRequests = new System.Collections.Concurrent.ConcurrentBag<RequestProfiledModel>();
             });
 
             var contextStub = new DefaultHttpContext();
