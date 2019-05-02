@@ -78,6 +78,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 6. Provide a mechanism to export application state to a file or database
 7. Autolink appveyer build to release `.dll` file generation
 8. Provide very simple way to install package (nuget, etc.)
+9. Significantly more tests + integration tests. Particularly loading files and serving dynamic content -- ensuring response sizes are byte-by-byte correct.
 
 ## Problems
 
@@ -96,10 +97,6 @@ I only encountered one major problem with this, which is where to store state in
     - Con: Requires developers to register dependency manually or to provide a global registration. Either way leaky
 
 I'd love to go over different approaches with other developers. I've never written any libraries that needed some form of state before, and its definitely an interesting architectural problem.
-
-## UTF-Encoding
-
-Full UTF support is handle by default. This is thanks to the use of pure binary data.
 
 ## Encryption & Compression
 
