@@ -4,7 +4,7 @@
 
 This is a coding exercise ran by [Contrast-Security](https://contrast-security-oss.github.io/join-the-team/challenges.html)
 
-The goal of the project was to build a very simple ASP.NET Core profiler using middleware that could determine body lengths and manipulate generated html.
+The goal of the project was to build a very simple ASP.NET Core profiler using middleware that could determine body lengths, request duration, and manipulate generated html.
 
 ## Building
 
@@ -33,8 +33,6 @@ The example profiled app should be running on `http://localhost:5000` and `https
 Run `dotnet test` from the solution directory or the tests project.
 
 Or install [NET Core Test Explorer](https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer)
-
-NOTE: Currently one of the tests fails unless ran in isolation. This is due to a choice in state pattern, and is discussed in `problems` section.
 
 ## Using
 
