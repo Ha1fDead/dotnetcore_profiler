@@ -42,10 +42,29 @@ Install project and build (see previous step).
 
 Copy and reference the `middleware.dll` file into your project.
 
-Add desired middleware:
+Add desired middleware to `Startup.cs` file:
 
 `app.UseHtmlInsertMiddleware();` will inject profiled data into all of your `text/html` pages
 `app.UseRequestProfilerMiddleware();` will actually profile your requests for how long they take and their response body sizes. Does *not* alter your html pages.
+
+Note: Order matters here! Ideally the middleware will be ran after any response altering operations (such as compression, encryption) but before actual request processing. Example:
+
+```C#
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    // Handle encryption, compression here
+
+    // These should be registered in the order
+    app.UseHtmlInsertMiddleware(); // optional
+    app.UseRequestProfilerMiddleware();
+
+    // Anything else in your pipeline. Most of your work should be done *after* the profiler, to ensure it gets profiled
+    app.UseHttpsRedirection();
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+    app.UseMvc();
+}
+```
 
 ## Future Improvements
 
