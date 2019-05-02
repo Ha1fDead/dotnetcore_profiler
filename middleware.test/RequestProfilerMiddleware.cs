@@ -14,7 +14,7 @@ namespace middleware.test
         public async void Invoke_RecordsRuntime()
         {
             // Arrange
-            const string mockResponse = "This is a test";
+            const string mockResponse = "This_is_a_test";
             var requestProfilerMiddleware = new RequestProfilerMiddleware(async (innerHttpContext) => {
                 await innerHttpContext.Response.WriteAsync(mockResponse);
                 innerHttpContext.Request.ContentLength = Encoding.ASCII.GetByteCount(mockResponse);
@@ -36,12 +36,6 @@ namespace middleware.test
             var profiledResponse = ProfilerLogic.ProfiledRequests.First();
             Assert.Equal(Encoding.ASCII.GetByteCount(mockResponse), profiledResponse.RequestBodyLengthBytes);
             Assert.NotEqual(0, profiledResponse.RequestDuration.Ticks);
-        }
-
-        [Fact(Skip = "Scaffold")]
-        public void Invoke_Multithreaded_RecordsRuntimes()
-        {
-
         }
     }
 }
