@@ -107,8 +107,8 @@ There are two major unknowns for the middleware: Encryption & Compression.
 
 I decided to just assume neither of these are applicable, and instead opted for a simpler "Push the requirements to the developer to initialize the middleware properly".
 
-- Encryption will modify content length and it is impossible to inject content into an encrypted file (also this is the responsibility of the underlying framework, *not* specific developer concerns)
-- Utilizing compression is an implementation detail and injected uncompressed content into a compressed file would require unnecessary content
+- Encryption will modify content length and it is impossible to inject content into an encrypted file
+- Utilizing compression is an implementation detail and injecting uncompressed content into a compressed file would require unnecessary computation to uncompress & recompress
 
 For both, I felt it was the responsibility of the underlying framework to handle these. Developers should register the middleware correctly such that its only dealing with unencrypted, uncompressed content to avoid unnecessary redundant computation.
 
