@@ -17,7 +17,6 @@ namespace middleware
             _requestDelegate = requestDelegate;
         }
 
-        // What about transfer encoding?
         public async Task InvokeAsync(HttpContext context)
         {
             // Due to middleware architecture, we don't have to worry about this stream having anything in it yet
